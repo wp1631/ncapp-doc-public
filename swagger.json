@@ -1,0 +1,871 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "NCAPP API",
+      "description": "Neuro-cognitive application API for AWS cloud-based server",
+      "version": "0.1"
+    },
+    "servers": [
+      {
+        "url": "https://api.cccnlab.co/",
+        "description": "Main (production) server"
+      }
+    ],
+    "paths": {
+      "/clients/login/line/": {
+        "post": {
+          "summary": "User authorization / Return access/refresh token",
+          "description": "Return access token / refresh token and account information using code obtained frop LINE authentication process",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "JSON of account information along with authorization tokens",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "account_info": {
+                        "type": "object",
+                        "properties": {
+                          "account_id": {
+                            "type": "string"
+                          },
+                          "line_uid": {
+                            "type": "string"
+                          },
+                          "phonenumber": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "401": {
+              "description": "Used/Invalid Token"
+            }
+          }
+        }
+      },
+      "/clients/login/line_id_token/": {
+        "post": {
+          "summary": "User authorization via LINE auth id token / Return access/refresh token",
+          "description": "Return access token / refresh token and account information using LINE id token",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id_token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "JSON of account information along with authorization tokens",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "account_info": {
+                        "type": "object",
+                        "properties": {
+                          "account_id": {
+                            "type": "string"
+                          },
+                          "line_uid": {
+                            "type": "string"
+                          },
+                          "phonenumber": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "access_token": {
+                        "type": "string"
+                      },
+                      "refresh_token": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }
+      },
+      "/token/refresh/": {
+        "post": {
+          "summary": "Get new access token",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh_token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "JSON of account information along with authorization tokens",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "access_token": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid Request"
+            }
+          }
+        }
+      },
+      "/account/fetch/": {
+        "post": {
+          "summary": "Get account data from access token",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "account_id": {
+                        "type": "string"
+                      },
+                      "line_uid": {
+                        "type": "string"
+                      },
+                      "phonenumber": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/account/profile/fetch/": {
+        "post": {
+          "summary": "Get profile data from access token",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "account_id": {
+                        "type": "string"
+                      },
+                      "line_uid": {
+                        "type": "string"
+                      },
+                      "phonenumber": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/account/profile/create/": {
+        "post": {
+          "summary": "Create profile using access token and credentials",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string"
+                    },
+                    "creds": {
+                      "type": "object",
+                      "required": [
+                        "account_id",
+                        "firstname",
+                        "lastname",
+                        "gender",
+                        "education",
+                        "dob"
+                      ],
+                      "properties": {
+                        "account_id": {
+                          "type": "string"
+                        },
+                        "firstname": {
+                          "type": "string"
+                        },
+                        "lastname": {
+                          "type": "string"
+                        },
+                        "gender": {
+                          "type": "string",
+                          "enum": [
+                            "Male",
+                            "Female"
+                          ]
+                        },
+                        "education": {
+                          "type": "string",
+                          "enum": [
+                            "NON",
+                            "KND",
+                            "PRS",
+                            "JHS",
+                            "HIS",
+                            "DIP",
+                            "BAC",
+                            "MAS",
+                            "DOC",
+                            "NOD"
+                          ]
+                        },
+                        "dob": {
+                          "type": "string",
+                          "description": "string represent date of birth in YYYY-MM-DD format"
+                        },
+                        "middlename": {
+                          "type": "string"
+                        },
+                        "phonenumber": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "inactive"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Profile created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "profile_id": {
+                        "type": "integer"
+                      },
+                      "account_id": {
+                        "type": "string"
+                      },
+                      "firstname": {
+                        "type": "string"
+                      },
+                      "middlename": {
+                        "type": "string"
+                      },
+                      "lastname": {
+                        "type": "string"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "enum": [
+                          "Male",
+                          "Female"
+                        ]
+                      },
+                      "education": {
+                        "type": "string",
+                        "enum": [
+                          "NON",
+                          "KND",
+                          "PRS",
+                          "JHS",
+                          "HIS",
+                          "DIP",
+                          "BAC",
+                          "MAS",
+                          "DOC",
+                          "NOD"
+                        ]
+                      },
+                      "dob": {
+                        "type": "string",
+                        "description": "string represent date of birth in YYYY-MM-DD format"
+                      },
+                      "phonenumber": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "active",
+                          "inactive"
+                        ]
+                      },
+                      "lastmodified": {
+                        "type": "integer",
+                        "description": "unix timestamp represents last modify time"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        }
+      },
+      "/account/profile/update/": {
+        "post": {
+          "summary": "Update profile using access token and credentials",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string"
+                    },
+                    "creds": {
+                      "type": "object",
+                      "required": [
+                        "account_id",
+                        "profile_id"
+                      ],
+                      "properties": {
+                        "account_id": {
+                          "type": "string"
+                        },
+                        "profile_id": {
+                          "type": "integer"
+                        },
+                        "firstname": {
+                          "type": "string"
+                        },
+                        "lastname": {
+                          "type": "string"
+                        },
+                        "gender": {
+                          "type": "string",
+                          "enum": [
+                            "Male",
+                            "Female"
+                          ]
+                        },
+                        "education": {
+                          "type": "string",
+                          "enum": [
+                            "NON",
+                            "KND",
+                            "PRS",
+                            "JHS",
+                            "HIS",
+                            "DIP",
+                            "BAC",
+                            "MAS",
+                            "DOC",
+                            "NOD"
+                          ]
+                        },
+                        "dob": {
+                          "type": "string",
+                          "description": "string represent date of birth in YYYY-MM-DD format"
+                        },
+                        "middlename": {
+                          "type": "string"
+                        },
+                        "phonenumber": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "inactive"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Profile created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "profile_id": {
+                        "type": "integer"
+                      },
+                      "account_id": {
+                        "type": "string"
+                      },
+                      "firstname": {
+                        "type": "string"
+                      },
+                      "middlename": {
+                        "type": "string"
+                      },
+                      "lastname": {
+                        "type": "string"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "enum": [
+                          "Male",
+                          "Female"
+                        ]
+                      },
+                      "education": {
+                        "type": "string",
+                        "enum": [
+                          "NON",
+                          "KND",
+                          "PRS",
+                          "JHS",
+                          "HIS",
+                          "DIP",
+                          "BAC",
+                          "MAS",
+                          "DOC",
+                          "NOD"
+                        ]
+                      },
+                      "dob": {
+                        "type": "string",
+                        "description": "string represent date of birth in YYYY-MM-DD format"
+                      },
+                      "phonenumber": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "active",
+                          "inactive"
+                        ]
+                      },
+                      "lastmodified": {
+                        "type": "integer",
+                        "description": "unix timestamp represents last modify time"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        }
+      },
+      "/gonogo/test/post/": {
+        "post": {
+          "summary": "Post Go-NoGo test data",
+          "description": "Post Go-NoGo data to database along with access token",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string"
+                    },
+                    "testdata": {
+                      "type": "object",
+                      "properties": {
+                        "log": {
+                          "description": "User label for each test",
+                          "type": "object",
+                          "properties": {
+                            "account_id": {
+                              "type": "string"
+                            },
+                            "profile_id": {
+                              "type": "integer"
+                            },
+                            "teststart": {
+                              "type": "integer",
+                              "description": "unix ts in seconds"
+                            },
+                            "testend": {
+                              "type": "integer",
+                              "description": "unix ts in seconds"
+                            }
+                          }
+                        },
+                        "testconfig": {
+                          "type": "object",
+                          "properties": {
+                            "version": {
+                              "type": "string"
+                            },
+                            "flash_duration": {
+                              "type": "integer"
+                            },
+                            "jitter_multiplier": {
+                              "type": "integer"
+                            },
+                            "jitter_base": {
+                              "type": "integer"
+                            },
+                            "n_seq": {
+                              "type": "integer"
+                            },
+                            "blockdur": {
+                              "type": "integer"
+                            },
+                            "changerate": {
+                              "type": "integer"
+                            },
+                            "gorate": {
+                              "type": "integer"
+                            },
+                            "goblock_rate": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "rawtestdata": {
+                          "type": "object",
+                          "properties": {
+                            "events_id": {
+                              "description": "Array of string codes identifying the cueing event",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "events_start_arr": {
+                              "description": "Array of timestamps indicating the beginning of cueing events",
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "description": "unix ts in ms from JS"
+                              }
+                            },
+                            "events_end_arr": {
+                              "description": "Array of timestamps indicating the ending of cueing events",
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "description": "unix ts in ms from JS"
+                              }
+                            },
+                            "clickevent_arr": {
+                              "description": "Array of string codes identifying user's interaction event",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "clicktime_arr": {
+                              "description": "Array of timestamps at the moments of user's interaction events",
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "description": "unix ts in ms from JS"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        }
+      },
+      "/conjsearch/test/post/": {
+        "post": {
+          "summary": "Post Go-NoGo test data",
+          "description": "Post Go-NoGo data to database along with access token",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string"
+                    },
+                    "testdata": {
+                      "type": "object",
+                      "properties": {
+                        "log": {
+                          "description": "User label for each test",
+                          "type": "object",
+                          "properties": {
+                            "account_id": {
+                              "type": "string"
+                            },
+                            "profile_id": {
+                              "type": "integer"
+                            },
+                            "teststart": {
+                              "type": "integer",
+                              "description": "unix ts in seconds"
+                            },
+                            "testend": {
+                              "type": "integer",
+                              "description": "unix ts in seconds"
+                            }
+                          }
+                        },
+                        "testconfig": {
+                          "type": "object",
+                          "properties": {
+                            "version": {
+                              "type": "string"
+                            },
+                            "target": {
+                              "description": "string identifying the target object",
+                              "type": "string"
+                            },
+                            "nchange": {
+                              "type": "integer"
+                            },
+                            "ntrials": {
+                              "type": "integer"
+                            },
+                            "initialss": {
+                              "type": "integer"
+                            },
+                            "maxss": {
+                              "type": "integer"
+                            },
+                            "rectangle_width": {
+                              "type": "integer"
+                            },
+                            "rectangle_height": {
+                              "type": "integer"
+                            },
+                            "timelimit_base": {
+                              "type": "integer"
+                            },
+                            "timelimit_decline": {
+                              "type": "integer"
+                            },
+                            "timelimit_incline": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "rawtestdata": {
+                          "type": "object",
+                          "required": [
+                            "alltarget",
+                            "starttrialtime_arr",
+                            "currss_arr",
+                            "answertime_arr",
+                            "ceilingtime",
+                            "check_arr"
+                          ],
+                          "properties": {
+                            "alltarget": {
+                              "description": "Array of string codes identifying target",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "starttrialtime_arr": {
+                              "description": "Array of timestamps indicating the beginning of trial",
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "description": "unix ts in ms from JS"
+                              }
+                            },
+                            "currss_arr": {
+                              "description": "Array of current number of spatial - spanned object",
+                              "type": "array",
+                              "items": {
+                                "type": "integer"
+                              }
+                            },
+                            "answertime_arr": {
+                              "description": "Array of current number of spatial - spanned object",
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "description": "unix ts in ms from JS"
+                              }
+                            },
+                            "ceilingtime": {
+                              "description": "integer value in ms indicating ceiling time",
+                              "type": "integer"
+                            },
+                            "besttime": {
+                              "description": "integer value in ms indicating best time",
+                              "type": "integer"
+                            },
+                            "check_arr": {
+                              "description": "Array of 1,0 indicating correctly answer for each trial",
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "description": "1 as True and 0 as False"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        }
+      }
+    }
+  }
