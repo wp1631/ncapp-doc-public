@@ -717,8 +717,8 @@
       },
       "/conjsearch/test/post/": {
         "post": {
-          "summary": "Post Go-NoGo test data",
-          "description": "Post Go-NoGo data to database along with access token",
+          "summary": "Post Conjunction search test data",
+          "description": "Post Conjunction search data to database along with access token",
           "requestBody": {
             "required": true,
             "content": {
